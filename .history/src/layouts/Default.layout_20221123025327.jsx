@@ -8,7 +8,6 @@ const DefaultLayout = ({ element: Element, ...props }) => {
   return (
     <>
       <Navbar />
-      <HeroCarousel />
       {Element}
     </>
   );
