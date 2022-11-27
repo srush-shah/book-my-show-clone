@@ -1,7 +1,7 @@
 import React from "react";
 
 const Movie = () => {
-  return <>HI</>;
+  return <>Hello</>;
 };
 
 export default Movie;
