@@ -1,7 +1,11 @@
 import React from "react";
 
+//component
 import EntertainmentCardSlider from "../components/Entertainment/Entertainmentcard.component";
-import Premiere from "../components/Premiere/Premiere.component";
+import PosterSlider from "../components/PosterSlider/PosterSlider.component";
+
+//confg
+import TempPosters from "../config/TempPosters.config";
 
 const HomePage = () => {
   return (
@@ -21,7 +25,11 @@ const HomePage = () => {
                 alt="Premiere and Rupay"
               />
             </div>
-            <Premiere />
+            <PosterSlider
+              images={TempPosters}
+              title="Premieres"
+              subtitle="Brand new releases every Friday"
+            />
           </div>
         </div>
       </div>
