@@ -1,12 +1,21 @@
 import React from "react";
-import { BiSearch, BiMenu, BiChevronDown, BiShareAlt } from "react-icons/bi";
+import {
+  BiSearch,
+  BiMenu,
+  BiChevronDown,
+  BiShareAlt,
+  BiChevronLeft,
+} from "react-icons/bi";
 
 const NavSm = () => {
   return (
     <>
       <div className="text-white flex items-center justify-between">
-        <div>
-          <h3 className="text-xl font-bold">It All Starts Here!</h3>
+        <div className="flex items-center">
+          <div className="w-8 h-8">
+            <BiChevronLeft className="w-full h-full" />
+          </div>
+          <h3 className="text-xl font-bold">Drishyam 2</h3>
         </div>
         <div className="w-8 h-8">
           <BiShareAlt className="w-full h-full" />
