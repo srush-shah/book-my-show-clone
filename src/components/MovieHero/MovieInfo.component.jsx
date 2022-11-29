@@ -32,7 +32,7 @@ const MovieInfo = () => {
               Rent ₹149
             </button>
             <button className="bg-bmsRed-300 w-full py-3 text-white font-semibold rounded-lg">
-              Book tickets
+              Buy ₹369
             </button>
           </div>
         </div>
