@@ -7,7 +7,6 @@ import { NextArrow, PrevArrow } from "./Arrows.component";
 const HeroCarousel = () => {
   const settingsLG = {
     arrows: true,
-    dots: true,
     autoplay: true,
     centerMode: true,
     centerPadding: "300px",
@@ -19,7 +18,6 @@ const HeroCarousel = () => {
   };
   const settings = {
     arrows: true,
-    dots: true,
     autoplay: true,
     infinite: true,
     speed: 500,
