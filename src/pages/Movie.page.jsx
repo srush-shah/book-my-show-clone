@@ -1,8 +1,48 @@
 import React from "react";
 import { SiPaytm, SiPaypal } from "react-icons/si";
+
+//Config
+import TempPosters from "../config/TempPosters.config";
+
+//Component
 import MovieHero from "../components/MovieHero/MovieHero.component";
+import Cast from "../components/Cast/Cast.component";
+import PosterSlider from "../components/PosterSlider/PosterSlider.component";
 
 const Movie = () => {
+  const settings = {
+    infinite: false,
+    autoplay: false,
+    slidesToShow: 4,
+    slidesToScroll: 2,
+    initialSlide: 0,
+    responsive: [
+      {
+        breakpoint: 1024,
+        settings: {
+          slidesToShow: 3,
+          slidesToScroll: 2,
+          infinite: true,
+        },
+      },
+      {
+        breakpoint: 600,
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 1,
+          initialSlide: 1,
+        },
+      },
+      {
+        breakpoint: 480,
+        settings: {
+          slidesToShow: 3,
+          slidesToScroll: 1,
+        },
+      },
+    ],
+  };
+
   return (
     <>
       <MovieHero />
@@ -51,6 +91,54 @@ const Movie = () => {
               </div>
             </div>
           </div>
+        </div>
+        <div className="my-8">
+          <hr />
+        </div>
+        <div className="my-8">
+          <h2 className="text-gray-800 font-bold text-2xl mb-4">Cast & Crew</h2>
+          <div className="flex flex-wrap gap-4">
+            <Cast
+              image="https://assets-in.bmscdn.com/iedb/artist/images/website/poster/large/ajay-devgn-24051-12-09-2017-04-41-13.jpg"
+              castName="Ajay Devgan"
+              role="Vijay Salgaonkar"
+            />
+            <Cast
+              image="https://assets-in.bmscdn.com/iedb/artist/images/website/poster/large/tabu-2324-30-09-2017-11-54-15.jpg"
+              castName="Tabu"
+              role="Actor"
+            />
+            <Cast
+              image="https://assets-in.bmscdn.com/iedb/artist/images/website/poster/large/akshaye-khanna-95-24-03-2017-14-07-23.jpg"
+              castName="Akshay Khanna"
+              role="Actor"
+            />
+            <Cast
+              image="https://assets-in.bmscdn.com/iedb/artist/images/website/poster/large/shriya-saran-2156-18-09-2017-04-10-24.jpg"
+              castName="Shriya Saran"
+              role="Actor"
+            />
+          </div>
+        </div>
+        <div className="my-8">
+          <hr />
+        </div>
+        <div className="my-8">
+          <PosterSlider
+            config={settings}
+            images={TempPosters}
+            title="You Might Also Like"
+          />
+        </div>
+        <div className="my-8">
+          <hr />
+        </div>
+        <div className="my-8">
+          <PosterSlider
+            config={settings}
+            images={TempPosters}
+            title="BMS XCLUSIV"
+          />
         </div>
       </div>
     </>
