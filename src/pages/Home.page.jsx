@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 
 //component
 import EntertainmentCardSlider from "../components/Entertainment/Entertainmentcard.component";
@@ -8,6 +9,27 @@ import PosterSlider from "../components/PosterSlider/PosterSlider.component";
 import TempPosters from "../config/TempPosters.config";
 
 const HomePage = () => {
+  const [popularMovies, setPopularMovies] = useState([]);
+  const [topRatedMovies, setTopRatedMovies] = useState([]);
+  const [upcomingMovies, setUpcomingMovies] = useState([]);
+
+  useEffect(() => {
+    const requestPopularMovies = async () => {
+      const getPopularMovies = await axios.get("/movie/popular");
+      setPopularMovies(getPopularMovies.data.results);
+    };
+    const requestTopRatedMovies = async () => {
+      const getTopRatedMovies = await axios.get("/movie/top_rated");
+      setTopRatedMovies(getTopRatedMovies.data.results);
+    };
+    const requestUpcomingMovies = async () => {
+      const getUpcomingMovies = await axios.get("/movie/upcoming");
+      setUpcomingMovies(getUpcomingMovies.data.results);
+    };
+    requestPopularMovies();
+    requestTopRatedMovies();
+    requestUpcomingMovies();
+  }, []);
   return (
     <>
       <div className="flex flex-col gap-10">
@@ -26,7 +48,7 @@ const HomePage = () => {
               />
             </div>
             <PosterSlider
-              images={TempPosters}
+              images={popularMovies}
               title="Premieres"
               subtitle="Brand new releases every Friday"
               isDark
@@ -35,28 +57,10 @@ const HomePage = () => {
         </div>
       </div>
       <div className="container mx-auto px-4 my-8">
-        <PosterSlider images={TempPosters} title="Online Streaming Events" />
+        <PosterSlider images={topRatedMovies} title="Online Streaming Events" />
       </div>
       <div className="container mx-auto px-4 my-8">
-        <PosterSlider images={TempPosters} title="Outdoor Events" />
-      </div>
-      <div className="container mx-auto px-4 my-8">
-        <PosterSlider images={TempPosters} title="Laughter Therapy" />
-      </div>
-      <div className="container mx-auto px-4 my-8">
-        <PosterSlider images={TempPosters} title="Popular Events" />
-      </div>
-      <div className="container mx-auto px-4 my-8">
-        <PosterSlider images={TempPosters} title="The Latest Plays" />
-      </div>
-      <div className="container mx-auto px-4 my-8">
-        <PosterSlider
-          images={TempPosters}
-          title="Top Games and Sports Events"
-        />
-      </div>
-      <div className="container mx-auto px-4 my-8">
-        <PosterSlider images={TempPosters} title="Explore Fun Activities" />
+        <PosterSlider images={upcomingMovies} title="Outdoor Events" />
       </div>
     </>
   );

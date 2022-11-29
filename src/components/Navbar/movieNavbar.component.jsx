@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import {
   BiSearch,
   BiMenu,
@@ -7,7 +7,11 @@ import {
   BiChevronLeft,
 } from "react-icons/bi";
 
+//Context
+import { MovieContext } from "../../context/movie.context";
+
 const NavSm = () => {
+  const { movie } = useContext(MovieContext);
   return (
     <>
       <div className="text-white flex items-center justify-between">
@@ -15,7 +19,7 @@ const NavSm = () => {
           <div className="w-8 h-8">
             <BiChevronLeft className="w-full h-full" />
           </div>
-          <h3 className="text-xl font-bold">Drishyam 2</h3>
+          <h3 className="text-xl z-10 font-bold">{movie.original_title}</h3>
         </div>
         <div className="w-8 h-8">
           <BiShareAlt className="w-full h-full" />

@@ -1,6 +1,14 @@
-import React from "react";
+import React, { useContext } from "react";
+
+//Context
+import { MovieContext } from "../../context/movie.context";
 
 const MovieInfo = () => {
+  const { movie } = useContext(MovieContext);
+
+  const genres = movie.genres?.map(({ name }) => name).join(", "); //optional chaining technique
+  //movie.genres && movie.genres.map(({ name }) => name).join(", ");
+  const languages = movie.spoken_languages?.map(({ name }) => name).join(", ");
   return (
     <>
       <div className="flex flex-col gap-3 lg:gap-8">
@@ -17,14 +25,16 @@ const MovieInfo = () => {
           </span>
         </div>
         <h1 className="hidden lg:block text-white lg:text-5xl font-bold">
-          Drishyam 2
+          {movie.title}
         </h1>
         <div className="flex flex-col-reverse gap-3 lg:gap-5 lg:flex-col">
           <div className="text-white font-light flex flex-col gap-2 md:px-4">
-            <h4>4K &bull; English &bull; Languages: Hindi</h4>
             <h4>
-              2h 20m &bull; Drama, Mystery, Thriller &bull; UA &bull; 18 Nov,
-              2022
+              4K &bull; {languages} &bull; {movie.adult ? "18+" : "M"}{" "}
+            </h4>
+            <h4>
+              {(movie.runtime / 60).toFixed(2)} h &bull; {genres} &bull;{" "}
+              {movie.release_date}
             </h4>
           </div>
           <div className="flex items-center gap-3 md:px-4 md:w-screen lg:w-full py-2">

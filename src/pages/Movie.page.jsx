@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { SiPaytm, SiPaypal } from "react-icons/si";
 
 //Config
@@ -9,7 +9,11 @@ import MovieHero from "../components/MovieHero/MovieHero.component";
 import Cast from "../components/Cast/Cast.component";
 import PosterSlider from "../components/PosterSlider/PosterSlider.component";
 
+//Context
+import { MovieContext } from "../context/movie.context";
+
 const Movie = () => {
+  const { movie } = useContext(MovieContext);
   const settings = {
     infinite: false,
     autoplay: false,
@@ -50,10 +54,7 @@ const Movie = () => {
         <div className="flex flex-col items-start gap-3">
           <h2 className="text-gray-800 font-bold text-2xl">About the Movie</h2>
           <p className="text-gray-700">
-            7 years after the case related to Vijay Salgaonkar and his family
-            was closed, a series of unexpected events bring a truth to light
-            that threatens to change everything for the Salgaonkars. Can Vijay
-            save his family this time?
+            {movie.overview}
           </p>
         </div>
         <div className="my-8">
