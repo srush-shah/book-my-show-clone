@@ -18,7 +18,7 @@ const MovieLayout = ({ element: Element, ...props }) => {
       setMovie(getMovieData.data);
     };
     requestMovie();
-  }, []);
+  }, [id]);
 
   return (
     <>

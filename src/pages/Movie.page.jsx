@@ -1,8 +1,8 @@
-import React, { useContext } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { SiPaytm, SiPaypal } from "react-icons/si";
-
-//Config
-import TempPosters from "../config/TempPosters.config";
+import axios from "axios";
+import { useParams } from "react-router-dom";
+import Slider from "react-slick";
 
 //Component
 import MovieHero from "../components/MovieHero/MovieHero.component";
@@ -13,7 +13,34 @@ import PosterSlider from "../components/PosterSlider/PosterSlider.component";
 import { MovieContext } from "../context/movie.context";
 
 const Movie = () => {
+  const { id } = useParams();
   const { movie } = useContext(MovieContext);
+  const [cast, setCast] = useState([]);
+  const [similarMovies, setSimilarMovies] = useState([]);
+  const [recommended, setRecommended] = useState([]);
+  useEffect(() => {
+    const requestCast = async () => {
+      const getCast = await axios.get(`/movie/${id}/credits`);
+      setCast(getCast.data.cast);
+    };
+    requestCast();
+  }, [id]);
+
+  useEffect(() => {
+    const requestSimilarMovies = async () => {
+      const getSimilarMovies = await axios.get(`/movie/${id}/similar`);
+      setSimilarMovies(getSimilarMovies.data.results);
+    };
+    requestSimilarMovies();
+  }, [id]);
+  useEffect(() => {
+    const requestRecommended = async () => {
+      const getRecommended = await axios.get(`/movie/${id}/recommendations`);
+      setRecommended(getRecommended.data.results);
+    };
+    requestRecommended();
+  }, [id]);
+
   const settings = {
     infinite: false,
     autoplay: false,
@@ -47,15 +74,46 @@ const Movie = () => {
     ],
   };
 
+  const settingsCast = {
+    infinite: false,
+    autoplay: false,
+    slidesToShow: 6,
+    slidesToScroll: 2,
+    initialSlide: 0,
+    responsive: [
+      {
+        breakpoint: 1024,
+        settings: {
+          slidesToShow: 4,
+          slidesToScroll: 2,
+          infinite: true,
+        },
+      },
+      {
+        breakpoint: 600,
+        settings: {
+          slidesToShow: 5,
+          slidesToScroll: 1,
+          initialSlide: 1,
+        },
+      },
+      {
+        breakpoint: 480,
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 1,
+        },
+      },
+    ],
+  };
+
   return (
     <>
       <MovieHero />
       <div className="container px-4 my-12 lg:ml-16 lg:w-2/3">
         <div className="flex flex-col items-start gap-3">
           <h2 className="text-gray-800 font-bold text-2xl">About the Movie</h2>
-          <p className="text-gray-700">
-            {movie.overview}
-          </p>
+          <p className="text-gray-700">{movie.overview}</p>
         </div>
         <div className="my-8">
           <hr />
@@ -98,28 +156,15 @@ const Movie = () => {
         </div>
         <div className="my-8">
           <h2 className="text-gray-800 font-bold text-2xl mb-4">Cast & Crew</h2>
-          <div className="flex flex-wrap gap-4">
-            <Cast
-              image="https://assets-in.bmscdn.com/iedb/artist/images/website/poster/large/ajay-devgn-24051-12-09-2017-04-41-13.jpg"
-              castName="Ajay Devgan"
-              role="Vijay Salgaonkar"
-            />
-            <Cast
-              image="https://assets-in.bmscdn.com/iedb/artist/images/website/poster/large/tabu-2324-30-09-2017-11-54-15.jpg"
-              castName="Tabu"
-              role="Actor"
-            />
-            <Cast
-              image="https://assets-in.bmscdn.com/iedb/artist/images/website/poster/large/akshaye-khanna-95-24-03-2017-14-07-23.jpg"
-              castName="Akshay Khanna"
-              role="Actor"
-            />
-            <Cast
-              image="https://assets-in.bmscdn.com/iedb/artist/images/website/poster/large/shriya-saran-2156-18-09-2017-04-10-24.jpg"
-              castName="Shriya Saran"
-              role="Actor"
-            />
-          </div>
+          <Slider {...settingsCast}>
+            {cast.map((castData) => (
+              <Cast
+                image={`https://image.tmdb.org/t/p/original${castData.profile_path}`}
+                castName={castData.original_name}
+                role={castData.character}
+              />
+            ))}
+          </Slider>
         </div>
         <div className="my-8">
           <hr />
@@ -127,7 +172,7 @@ const Movie = () => {
         <div className="my-8">
           <PosterSlider
             config={settings}
-            images={TempPosters}
+            images={similarMovies}
             title="You Might Also Like"
           />
         </div>
@@ -137,7 +182,7 @@ const Movie = () => {
         <div className="my-8">
           <PosterSlider
             config={settings}
-            images={TempPosters}
+            images={recommended}
             title="BMS XCLUSIV"
           />
         </div>
